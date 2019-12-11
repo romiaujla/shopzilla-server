@@ -12,7 +12,7 @@ Complete the following steps to clone the server:
 5. For the first time, create a database user `createuser --interactive capstone-admin`
 6. Don't set a password for the database.
 7. Create the database `createdb -U capstone-admin v-store-db`
-8. Create the test database `createdb -U capstone-admin v-store-db`
+8. Create the test database `createdb -U capstone-admin v-store-test-db`
 9. Run the migrations `npm run migrate`
 
 
