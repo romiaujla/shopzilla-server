@@ -1,14 +1,16 @@
 {
   "name": "express-boilerplate",
   "version": "1.0.0",
-  "description": "This is a boilerplate project used for starting new projects!",
+  "description": "This is a server for the variety popup shop",
   "main": "index.js",
   "scripts": {
     "test": "mocha test",
     "start": "node ./src/server",
     "dev": "nodemon ./src/server",
     "predeploy": "npm audit",
-    "deploy": "git push heroku master"
+    "deploy": "git push heroku master",
+    "migrate":"postgrator --config postgrator-config.js",
+    "migrate:test":"env NODE_ENV=test npm run migrate"
   },
   "repository": {
     "type": "git",
