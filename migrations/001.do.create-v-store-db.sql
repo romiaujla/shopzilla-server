@@ -36,6 +36,7 @@ CREATE TABLE seller(
     login_id INTEGER REFERENCES users(id) NOT NULL UNIQUE,
     shop_name TEXT NOT NULL,
     address TEXT NOT NULL,
+    description TEXT, 
     start_date DATE DEFAULT NOW(),
     end_date DATE DEFAULT NOW(),
     opening_time TIME DEFAULT '00:00:00',
@@ -76,9 +77,9 @@ INSERT INTO users (username, password, user_type) VALUES
     ('dummybuyer002', 'password', 'buyer')
     ('ramanaujla', 'password', 'seller');
 
-INSERT INTO seller(login_id, shop_name, address, start_date, end_date, opening_time, closing_time, service_type) VALUES
-    (1, 'Dummy Shop', '1234 ABC Street, New York, NY 11020', '2019-12-24', '2019-12-31',  '10:00:00', '22:00:00', 'food and drinks'),
-    (3, 'Come Code with Us', '7133 Foxthorn Dr, Canton, MI 48187', '2019-12-31', '2020-01-31', '08:00:00', '14:00:00', 'educational');
+INSERT INTO seller(login_id, shop_name, address, start_date, end_date, opening_time, closing_time, service_type, description) VALUES
+    (1, 'Dummy Shop', '1234 ABC Street, New York, NY 11020', '2019-12-24', '2019-12-31',  '10:00:00', '22:00:00', 'food and drinks', 'Selling food and drinks'),
+    (3, 'Come Code with Us', '7133 Foxthorn Dr, Canton, MI 48187', '2019-12-31', '2020-01-31', '08:00:00', '14:00:00', 'educational', 'Helping students learn new tech stack');
 
 
 INSERT INTO buyer(login_id, name) VALUES
