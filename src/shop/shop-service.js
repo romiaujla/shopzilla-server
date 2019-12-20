@@ -1,5 +1,5 @@
 const ShopService = {
-    getSellers(db){
+    getShops(db){
         return db('shop');
     }
 }
