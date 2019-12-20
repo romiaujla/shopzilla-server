@@ -86,7 +86,7 @@ INSERT INTO users (username, password, user_type) VALUES
     ('shopuser02', '$2a$12$fN64sChSm6YICplSHtc70eM8v3auCG6cdzSjZyP5bCLDE9kDsQQPe', 'shop');
 
 INSERT INTO shop(login_id, shop_name, address, start_date, end_date, opening_time, closing_time, service_type, description, image_url) VALUES
-    (1, 'Flip Flop USA', '90 Kent Ave, East River State Park, Brooklyn, NY 11211', CURRENT_DATE-5, CURRENT_DATE+2,  '10:00:00', '22:00:00', 'clothing and accessories', 'Since 2004, we’ve been curating quality flip flops and casual footwear for the beach and beyond. Whatever your mood or style, you’ll find the product to match it.', 'filpflops.png'),
+    (1, 'Flip Flop USA', '90 Kent Ave, East River State Park, Brooklyn, NY 11211', CURRENT_DATE-5, CURRENT_DATE+2,  '10:00:00', '22:00:00', 'clothing and accessories', 'Since 2004, we’ve been curating quality flip flops and casual footwear for the beach and beyond. Whatever your mood or style, you’ll find the product to match it.', 'flipflops.png'),
     (2, 'Tullys Coffee', '657C Gates St., Rialto, CA 92376', CURRENT_DATE+1,CURRENT_DATE+3, '12:00:00', '18:00:00', 'food and drinks', 'This "slow and low" ideology is shared by our four handpicked artists, who believe in the craft and care of their work. Follow our journey from San Francisco to Seattle as we meet four artists who add their own special spark to our Tully’s camper.', 'tully.png'  );
 
 
