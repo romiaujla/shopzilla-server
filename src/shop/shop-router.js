@@ -8,32 +8,27 @@ ShopRouter
     .get((req, res, next) => {
         const db = req.app.get('db');
 
-        // gets all the sellers from the database
-        return ShopService.getSellers(db)
-            .then((sellers) => {
-                if(!sellers){
+        // gets all the shops from the database
+        return ShopService.getShops(db)
+            .then((shops) => {
+                if(!shops){
                     return res
                         .status(400)
                         .json({
                             error: {
-                                message: `Could not get sellers from the database`
+                                message: `Could not get shops from the database`
                             }
                         })
                 }
 
                 return res
                     .status(200)
-                    .json(sellers);
+                    .json(shops);
             })
             .catch(err => {
                 next(err)
             });
     })
 
-ShopRouter
-    .route('/')
-    .patch(jsonParser, (req, res, next) => {
-        
-    })
 
-module.exports = ShopRouter;
+    module.exports = ShopRouter;
