@@ -1,9 +1,9 @@
 const express = require('express');
-const authRouter = express.Router();
+const AuthRouter = express.Router();
 const jsonParser = express.json();
 const AuthService = require('./auth-service');
 
-authRouter
+AuthRouter
     .post('/login', jsonParser, (req, res, next) => {
         const {username, password} = req.body;
         const loginUser = {
@@ -28,8 +28,8 @@ authRouter
             req.app.get('db'),
             loginUser.username
         )
-            .then((dbCarrier) => {
-                if(!dbCarrier){
+            .then((user) => {
+                if(!user){
                     return res
                         .status(400)
                         .json({
@@ -41,7 +41,7 @@ authRouter
 
                 return AuthService.comparePassword(
                     loginUser.password,
-                    dbCarrier.password   
+                    user.password   
                 )
                     .then(compareMatch => {
                         if(!compareMatch){
@@ -54,9 +54,9 @@ authRouter
                                 })
                         }
 
-                        const sub = dbCarrier.username
+                        const sub = user.username
                         const payload = {
-                            carrier_id: dbCarrier.id
+                            carrier_id: user.id
                         }
 
                         res.send({
@@ -70,4 +70,4 @@ authRouter
             .catch(next)
     });
 
-module.exports = authRouter
+module.exports = AuthRouter
