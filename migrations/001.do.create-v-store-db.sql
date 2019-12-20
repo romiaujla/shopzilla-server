@@ -74,7 +74,7 @@ CREATE TABLE reviews(
 
 INSERT INTO users (username, password, user_type) VALUES 
     ('dummyseller001', 'password', 'seller'),
-    ('dummybuyer002', 'password', 'buyer')
+    ('dummybuyer002', 'password', 'buyer'),
     ('ramanaujla', 'password', 'seller');
 
 INSERT INTO seller(login_id, shop_name, address, start_date, end_date, opening_time, closing_time, service_type, description) VALUES
