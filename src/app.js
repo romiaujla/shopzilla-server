@@ -4,7 +4,8 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require ('cors');
 const helmet = require('helmet');
-const SellerRouter = require('./sellers/sellers-router');
+const ShopRouter = require('./shop/shop-router');
+const AuthRouter = require('./auth/auth-router');
 
 const app = express();
 const morganOptions = NODE_ENV === 'production' 
@@ -15,7 +16,9 @@ app.use(helmet());
 app.use(cors());
 
 // seller endpoints
-app.use(`/sellers`, SellerRouter);
+app.use(`/api/auth`, AuthRouter);
+app.use(`/api/shops`, ShopRouter);
+
 
 app.get(`/`, (_,res)=>{
     res.json(`GET / endpoint reached`);
