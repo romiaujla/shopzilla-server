@@ -1,19 +1,16 @@
 const app = require('./app');
-const {PORT, NODE_ENV} = require('./config');
+const {PORT, DATABASE_URL} = require('./config');
+const {errorhandler} = require('./errorHandler');
 
-app.use((error, req, res, next) => {
-    let response = {};
-    if(NODE_ENV === 'production'){
-        response = {
-            error: {
-                message: `Server Error`
-            }
-        }
-    }else{
-        response = {error}
-    }
-    res.status(500).json(response);
-})
+// Establishing the database connection
+const knex = require('knex');
+const db = knex({
+    client: 'pg',
+    connection: process.env.DATABASE_URL || DATABASE_URL,
+});
+app.set('db', db);
+
+app.use(errorhandler);
 
 app.listen(PORT, ()=> {
     console.log(`Sever listening at PORT:${PORT}`);
