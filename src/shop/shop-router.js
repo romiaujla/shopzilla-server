@@ -30,5 +30,28 @@ ShopRouter
             });
     })
 
+ShopRouter
+    .route('/:id')
+    .get((req, res, next) => {
+        const db = req.app.get('db');
+        const {id} = req.params;
+        return ShopService.getShopById(db, id)
+            .then((shop) => {
+                if(!shop){
+                    return res
+                        .status(400)
+                        .json({
+                            error: {
+                                message: `Shop by id:${id} could not be found`
+                            }
+                        })
+                }
 
-    module.exports = ShopRouter;
+                return res.json(shop);
+            })
+            .catch(err => {
+                next(err);
+            }) 
+    })  
+
+module.exports = ShopRouter;
