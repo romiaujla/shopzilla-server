@@ -1,4 +1,5 @@
 const ShopService = {
+    
     getShops(db){
         return db('shop');
     },
@@ -8,10 +9,8 @@ const ShopService = {
             .first();
     },
     getProductsByShopId(db, id){
-        return db('shop_products')
-            .where(
-                'id', 'shop_id'
-            )
+        return db
+            .from('shop_products as shprd')
     }
 }
 

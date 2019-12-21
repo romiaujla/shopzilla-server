@@ -1,9 +1,7 @@
-function validateSeller(req, res, next){
-    const {
-        
-    }
+function validation(req, res, next){
+    return true;
 }
 
 module.exports = {
-    validateSeller,
+    validation,
 }
