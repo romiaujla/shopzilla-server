@@ -98,7 +98,8 @@ INSERT INTO shop(login_id, shop_name, address, start_date, end_date, opening_tim
     (3, 'Custom Boards', '9556 James Dr., Romeoville, IL 60446', CURRENT_DATE+1,CURRENT_DATE+3, '12:00:00', '18:00:00', 'sports and hobbies', 'Custom made skateboards has been selling beautifully designed boards for decoration or to even shred if you want. You can even come in with a design and we will try our best to replicate it.', 'customboards.png'  ),
     (4, 'The Toy Barn', '2 Arch Rd., Norman, OK 73072', CURRENT_DATE+1,CURRENT_DATE+3, '12:00:00', '18:00:00', 'toys and leisure', 'From custom made to store brand toys, discover toys you did not know existed!', 'thetoybarn.png'  ),
     (5, 'The Soap Shop', '34 Circle Ave., San Lorenzo, CA 94580', CURRENT_DATE+1,CURRENT_DATE+3, '12:00:00', '18:00:00', 'bath and body', 'Custom made all natural soaps, containing many scents such as Lavender, Rosemary, Mangos, and more. Come find your perfect soap!', 'thesoapshop.png'  ),
-    (6, 'Burgerlicious', '22 Howard Ave., Clinton, MD 20735', CURRENT_DATE+1,CURRENT_DATE+3, '12:00:00', '18:00:00', 'food and drinks', 'Best burgers you can ever try, made with my family secret ingredients, the taste will leave you speechless!', 'burgerlicious.png'  );
+    (6, 'Burgerlicious', '22 Howard Ave., Clinton, MD 20735', CURRENT_DATE+1,CURRENT_DATE+3, '12:00:00', '18:00:00', 'food and drinks', 'Best burgers you can ever try, made with my family secret ingredients, the taste will leave you speechless!', 'burgerlicious.png'  ),
+    (6, 'Bracelets of Life', '883 Walnutwood Street, Chesterton, IN 46304, CURRENT_DATE+1,CURRENT_DATE+3, '12:00:00', '18:00:00', 'body healing', ' The body healing bracelets will act as an alternative medicine for curing the different physical, spiritual and emotional ailments one may have, in addition to promoting overall wellness.', 'braceletsoflife.png'  );
 
 
 -- INSERT INTO buyer(login_id, name) VALUES
