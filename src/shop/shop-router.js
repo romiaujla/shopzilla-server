@@ -2,6 +2,7 @@ const express = require('express');
 const ShopRouter = express.Router();
 const jsonParser = express.json();
 const ShopService = require('./shop-service');
+const {validation} = require('./shop-validation');
 
 ShopRouter
     .route('/')
@@ -51,7 +52,19 @@ ShopRouter
             })
             .catch(err => {
                 next(err);
-            }) 
+            })
     })  
+    .patch(jsonParser, validation, (req, res, next) => {
+        res.send(`Yeayyya`);
+    })
+
+ShopRouter
+    .route('/:id/products')
+    .get((req, res, next) => {
+        const id = req.params;
+        const db = req.app.get('db');
+
+        
+    })
 
 module.exports = ShopRouter;
