@@ -6,6 +6,12 @@ const ShopService = {
         return db('shop')
             .where({ id })
             .first();
+    },
+    getProductsByShopId(db, id){
+        return db('shop_products')
+            .where(
+                'id', 'shop_id'
+            )
     }
 }
 
