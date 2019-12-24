@@ -11,6 +11,12 @@ const ShopService = {
     getProductsByShopId(db, id){
         return db
             .from('shop_products as shprd')
+    },
+    getShopsByName(db, shop_name){
+        console.log(db('shop').where('shop_name', 'like', `*%${shop_name}%*`).toString());
+        return db
+            .from('shop')
+            .where('shop_name', 'like', `%${shop_name}%`);
     }
 }
 

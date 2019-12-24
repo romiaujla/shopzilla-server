@@ -61,10 +61,35 @@ ShopRouter
 ShopRouter
     .route('/:id/products')
     .get((req, res, next) => {
-        const id = req.params;
+        const {id} = req.params;
         const db = req.app.get('db');
 
         
     })
 
+
+ShopRouter
+    .route(`/search/:name`)
+    .get((req, res, next) => {
+        const {name} = req.params;
+        const db = req.app.get('db');
+
+        return ShopService.getShopsByName(db, name.toLowerCase())
+            .then(shops => {
+                if(!shops){
+                    return res
+                        .status(400)
+                        .json({
+                            error: {
+                                message: `Could not find any shops with name:${name}`
+                            }
+                        })
+                }
+
+                return res.json(shops);
+            })
+            .catch(err => {
+                next(err);
+            })
+    })
 module.exports = ShopRouter;
