@@ -4,7 +4,7 @@
   "description": "This is a server for the variety popup shop",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test",
+    "test": "mocha --require test/setup.js --watch",
     "start": "node ./src/server",
     "dev": "nodemon ./src/server",
     "predeploy": "npm audit",
