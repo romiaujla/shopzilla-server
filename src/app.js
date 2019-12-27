@@ -1,5 +1,5 @@
 require('dotenv').config();
-const {NODE_ENV} = require('./config');
+const {NODE_ENV, PORT} = require('./config');
 const express = require('express');
 const morgan = require('morgan');
 const cors = require ('cors');
@@ -21,7 +21,7 @@ app.use(`/api/shops`, ShopRouter);
 
 
 app.get(`/`, (_,res)=>{
-    res.json(`GET / endpoint reached`);
+    res.send(`Server listening at PORT:${PORT}`);
 })
 
 module.exports = app;
