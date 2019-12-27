@@ -64,6 +64,7 @@ AuthRouter
                                 sub,
                                 payload
                             ),
+                            userType: user.user_type,
                         })
                     })
             })
