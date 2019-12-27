@@ -22,6 +22,13 @@ const AuthService = {
             algorithms: ['HS256'],
         })
     },
+    getUserTypeId(db, user){
+        return db
+            .select('id')
+            .from('shop')
+            .where('login_id', user.id)
+            .first();
+    }
 }
 
 module.exports = AuthService;
