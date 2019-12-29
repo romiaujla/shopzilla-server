@@ -37,6 +37,11 @@ const ShopService = {
         return db
             .from('shop')
             .where({service_type});
+    },
+    updateShop(db, newShopData, id){
+        return db('shop')
+            .where({id})
+            .update(newShopData);
     }
 }
 
