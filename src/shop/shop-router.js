@@ -58,7 +58,12 @@ ShopRouter
     .patch(jwtAuth, jsonParser, validation, (req, res, next) => {
         const db = req.app.get('db');
         const {id} = req.params;
-        const newShopData = req.body;
+        let newShopData = req.body;
+        newShopData = {
+            ...newShopData,
+            start_date: new Date(newShopData.start_date),
+            end_date: new Date(newShopData.end_date),
+        }
             
         return ShopService.updateShop(db, newShopData, id)
             .then((updatedShop) => {
