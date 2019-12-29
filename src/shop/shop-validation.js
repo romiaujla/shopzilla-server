@@ -1,5 +1,5 @@
 function validation(req, res, next){
-    return true;
+    next();
 }
 
 module.exports = {
