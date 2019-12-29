@@ -3,6 +3,8 @@ const ShopRouter = express.Router();
 const jsonParser = express.json();
 const ShopService = require('./shop-service');
 const {validation} = require('./shop-validation');
+const {jwtAuth} = require('../middleware/jwtAuth');
+const AuthService = require('../auth/auth-service');
 
 ShopRouter
     .route('/')
@@ -54,8 +56,48 @@ ShopRouter
                 next(err);
             })
     })  
-    .patch(jsonParser, validation, (req, res, next) => {
-        res.send(`Yeayyya`);
+    .patch(jwtAuth, jsonParser, validation, (req, res, next) => {
+        const db = req.app.get('db');
+        const {user} = req;
+        return AuthService.getUserTypeId(db, user)
+          .then(loggedInUserType => {
+            if(!loggedInUserType){
+                return res
+                    .status(400)
+                    .json({
+                        error:{
+                            message: `Could not find which users data to edit`
+                        }
+                    })
+            }
+
+            const id = loggedInUserType.id
+            const newShopData = req.body;
+            
+            return ShopService.updateShop(db, newShopData, id)
+                .then((updatedShop) => {
+                    if(!updatedShop){
+                        return res
+                            .status(400)
+                            .json({
+                                error: {
+                                    message: `Could not update the shop`
+                                }
+                            })
+                    }
+
+                    return res.status(201).end();
+                })
+                .catch(err => {
+                    next(err);
+                })
+
+          })
+          .catch(err => {
+            next(err);
+          });
+
+        
     })
 
 ShopRouter
