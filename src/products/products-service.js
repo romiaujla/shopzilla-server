@@ -3,12 +3,14 @@ const ProductService = {
         return db('products')
             .insert(newProduct)
             .returning('*')
-            .then((row) => rows[0]);
+            .then((rows) => rows[0]);
     },
     insertShopProduct(db, newShopProduct){
-        return db('products')
+        return db('shop_products')
             .insert(newShopProduct)
             .returning('*')
-            .then((row) => rows[0]);
+            .then((rows) => rows[0]);
     },
 }
+
+module.exports = ProductService;
