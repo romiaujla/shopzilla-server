@@ -7,6 +7,7 @@ const helmet = require('helmet');
 const ShopRouter = require('./shop/shop-router');
 const AuthRouter = require('./auth/auth-router');
 const ProductRouter = require('./products/products-router');
+const RegistrationRouter = require('./registration/registration-router');
 
 const app = express();
 const morganOptions = NODE_ENV === 'production' 
@@ -20,6 +21,7 @@ app.use(cors());
 app.use(`/api/auth`, AuthRouter);
 app.use(`/api/shops`, ShopRouter);
 app.use('/api/products', ProductRouter);
+app.use('/api/register', RegistrationRouter);
 
 
 app.get(`/`, (_,res)=>{
