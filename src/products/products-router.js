@@ -1,15 +1,16 @@
 const express = require("express");
-const ProductRouter = express.Router;
+const ProductRouter = express.Router();
 const jsonParser = express.json();
 const { jwtAuth } = require("../middleware/jwtAuth");
 const { validation } = require("./products-validation");
 const ProductService = require('./products-service');
 
 ProductRouter
-    .route("/products")
+    .route("/")
     .post(jwtAuth, jsonParser, validation, (req, res, next) => {
         const db = req.app.get('db');
         const {
+            shop_id,
             item,
             price = 0.00,
             description = '',
@@ -23,7 +24,7 @@ ProductRouter
             image_url
         }
 
-        return ProductService(db, newProduct)
+        return ProductService.insertProduct(db, newProduct)
             .then((addedproduct) => {
                 if(!addedproduct){
                     return res
@@ -35,6 +36,27 @@ ProductRouter
                         })
                 }
 
-                return res.status(201).json(addedproduct);
+                const newShopProduct = {
+                    shop_id,
+                    product_id: addedproduct.id
+                }
+
+                return ProductService.insertShopProduct(db, newShopProduct)
+                    .then((newShopProduct) => {
+                        if(!newShopProduct){
+                            return res
+                                .status(400)
+                                .json({
+                                    error: {
+                                        message: `Could not add the shop product relation`
+                                    }
+                                })
+                        }
+
+                        return res.status(201).json(addedproduct);
+                    })
             })
     });
+
+
+module.exports = ProductRouter;
