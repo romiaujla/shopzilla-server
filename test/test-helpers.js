@@ -8,12 +8,6 @@ function makeUsersArray(){
     ]
 }
 
-function makeShopProductArray(){
-    return [
-        {}
-    ]
-}
-
 function makeShopsArray(){
     return [
         {
@@ -49,8 +43,18 @@ function makeProductsArray(){
     ]
 }
 
+function makeShopProductArray(){
+    return [
+        {"shop_id": 1, "product_id" : 1},
+        {"shop_id": 1, "product_id" : 2},
+        {"shop_id": 2, "product_id" : 3},
+        {"shop_id": 3, "product_id" : 4},
+    ]
+}
+
 module.exports = {
     makeShopsArray,
     makeProductsArray,
     makeUsersArray,
+    makeShopProductArray,
 }
