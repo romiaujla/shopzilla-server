@@ -12,7 +12,14 @@ describe(`Product Endpoint`, () => {
     let shops = makeShopsArray();
     let users = makeUsersArray();
 
-    const trucateTables = 'TRUNCATE TABLE shop_products, products RESTART IDENTITY';
+    const trucateTables = `TRUNCATE
+        reviews,
+        buyer,
+        shop_products,
+        products,
+        shop,
+        users
+    RESTART IDENTITY CASCADE`;
 
     before('make knex instance', () => {
         db = knex({
@@ -45,6 +52,7 @@ describe(`Product Endpoint`, () => {
         });
 
         it('should create and return a new product when provided with valid data', () => {
+            
             const newProduct = {
                 "shop_id": "1",
                 "item" : "Product 1", 
