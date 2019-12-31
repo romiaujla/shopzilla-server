@@ -22,12 +22,21 @@ const AuthService = {
             algorithms: ['HS256'],
         })
     },
-    getUserTypeId(db, user){
-        return db
+    getUserTypeId(db, user, user_type){
+        if(user_type === 'shop'){
+            return db
             .select('id')
             .from('shop')
             .where('login_id', user.id)
             .first();
+        }else{
+            return db
+            .select('id')
+            .from('buyer')
+            .where('login_id', user.id)
+            .first();
+        }
+        
     }
 }
 
