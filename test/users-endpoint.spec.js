@@ -7,6 +7,19 @@ describe('Users Endpoint', () => {
     let db;
 
     const users = helpers.makeUsersArray();
+    const newShopUser = {
+        username: 'testuser01',
+        password: 'testpassword',
+        user_type: 'shop',
+        shop_name: 'test shop 1',
+        address: 'test address',
+        description: 'test descrription',
+        start_date: new Date(),
+        end_date: new Date(),
+        opening_time: '11:00:00',
+        closing_time: '11:10:00',
+        service_type: 'food and drinks',
+    }
     
     before('make knex instance', () => {
         db = knex({
@@ -120,6 +133,86 @@ describe('Users Endpoint', () => {
                     .expect(400, {
                         error: {
                             message: 'Name is required for buyer'
+                        }
+                    })
+            })
+        })
+
+        context('Shop User Validation', () => {
+            const requiredFields = ['shop_name', 'address', 'service_type']
+            
+            requiredFields.forEach(field => {
+                const registerAttemptBody = {
+                    ...newShopUser,
+                }
+                it(`responds 400 ' when ${field} is missing'`, ()=>{
+                    delete registerAttemptBody[field]
+                    return request(app)
+                        .post('/api/users')
+                        .send(registerAttemptBody)
+                        .expect(400, {
+                            error: {
+                                message: `Missing '${field}' in request body`
+                            }
+                        })
+                })
+            })
+
+            it(`responds 400, when service_type is not in the database enum`, () => {
+                const serviceTypesInDB = [
+                    'food and drinks',
+                    'clothing and accessories',
+                    'home and party decor',
+                    'educational',
+                    'body healing',
+                    'tattoo and piercing',
+                    'sports and hobbies',
+                    'toys and leisure',
+                    'bath and body'
+                ]
+                const shopWithInvalidServiceType = {
+                    ...newShopUser,
+                    service_type: 'invalid type',
+                }
+                return request(app)
+                    .post('/api/users')
+                    .send(shopWithInvalidServiceType)
+                    .expect(400, {
+                        error: {
+                            message: `Serivce type '${shopWithInvalidServiceType.service_type}' does not exist in database`
+                        }
+                    })
+            })
+
+        })
+
+        context(`Happy Path for Adding a Seller`, () => {
+            it(`responds 201 by adding a shop with a bcryped password`, ()=>{
+                return request(app)
+                    .post('/api/users')
+                    .send(newShopUser)
+                    .expect(201)
+                    .expect((res) => {
+                        expect(res.body).to.have.property('id');
+                        expect(res.body.username).to.equal(newShopUser.username);
+                        expect(res.body.user_type).to.equal(newShopUser.user_type);
+                    })
+                    .expect(res => {
+                        db.from('users')
+                            .where({id: res.body.id})
+                            .first()
+                            .then((row) => {
+                                expect(row.username).to.eql(newShopUser.username);
+                                expect(row.user_type).to.eql(newShopUser.user_type);
+                                return bcrypt.compare(newShopUser.password, row.password)
+                            })
+                            .then(compareMatch => {
+                                expect(compareMatch).to.be.true;
+                            })
+                    })
+                    .expect(res => {
+                        if(res.body.user_type === 'shop'){
+                            expect(res.body.shop_name).to.eql(newShopUser.shop_name);
                         }
                     })
             })
