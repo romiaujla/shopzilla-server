@@ -50,7 +50,7 @@ AuthRouter.post("/login", jsonParser, (req, res, next) => {
         };
 
         let userTypeId = null;
-        return AuthService.getUserTypeId(db, user, user.userType)
+        return AuthService.getUserTypeId(db, user, user.user_type)
           .then(loggedInUserType => {
             userTypeId = loggedInUserType.id;
             res.send({

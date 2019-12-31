@@ -23,6 +23,7 @@ const AuthService = {
         })
     },
     getUserTypeId(db, user, user_type){
+        console.log(user_type);
         if(user_type === 'shop'){
             return db
             .select('id')
