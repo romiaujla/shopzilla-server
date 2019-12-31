@@ -4,6 +4,7 @@ const {
     makeProductsArray, 
     makeShopsArray,
     makeUsersArray,
+    cleanTables,
 } = require('./test-helpers');
 
 describe(`Product Endpoint`, () => {
@@ -11,15 +12,6 @@ describe(`Product Endpoint`, () => {
     let products = makeProductsArray();
     let shops = makeShopsArray();
     let users = makeUsersArray();
-
-    const trucateTables = `TRUNCATE
-        reviews,
-        buyer,
-        shop_products,
-        products,
-        shop,
-        users
-    RESTART IDENTITY CASCADE`;
 
     before('make knex instance', () => {
         db = knex({
@@ -30,11 +22,11 @@ describe(`Product Endpoint`, () => {
     });
 
     before('cleanup', () => {
-        return db.raw(trucateTables);
+        return cleanTables(db);
     })
 
     afterEach('cleanup', () => {
-        return db.raw(trucateTables);
+        return cleanTables(db);
     })
 
     after('disconnect from the database', () => {
