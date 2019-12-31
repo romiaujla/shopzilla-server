@@ -52,9 +52,23 @@ function makeShopProductArray(){
     ]
 }
 
+
+function cleanTables(db){
+    return db.raw(`
+    TRUNCATE
+        reviews,
+        buyer,
+        shop_products,
+        products,
+        shop,
+        users
+    RESTART IDENTITY CASCADE`);
+}
+
 module.exports = {
     makeShopsArray,
     makeProductsArray,
     makeUsersArray,
     makeShopProductArray,
+    cleanTables,
 }
