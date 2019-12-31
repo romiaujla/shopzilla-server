@@ -40,6 +40,8 @@ UserRouter
 
                 return UserService.insertUser(db, newUserWithHashedPassword)
                     .then(addedUser => {
+
+                        // Adding a buyer id the user type is buyer
                         if(addedUser.user_type === 'buyer'){
                             buyer = {
                                 ...buyer,

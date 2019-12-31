@@ -1,3 +1,12 @@
+TRUNCATE
+    reviews,
+    buyer,
+    shop_products,
+    products,
+    shop,
+    users
+RESTART IDENTITY CASCADE;
+
 BEGIN;
 
 INSERT INTO users (username, password, user_type) VALUES 
