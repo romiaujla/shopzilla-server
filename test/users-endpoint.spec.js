@@ -3,7 +3,7 @@ const app = require('../src/app');
 const helpers = require('./test-helpers');
 const bcrypt = require('bcryptjs');
 
-describe.only('Users Endpoint', () => {
+describe('Users Endpoint', () => {
     let db;
 
     const users = helpers.makeUsersArray();
@@ -104,16 +104,35 @@ describe.only('Users Endpoint', () => {
                             message: 'Invalid user type, must be either shop or buyer'
                         }
                     })
-                })  
+                })
         })
 
-        context(`Happy Path`, ()=> {
+        context(`Buyer Validation`, () => {
+            it(`responds 400 'Name required for buyer, when user_type = buyer`, () => {
+                const buyerWithNoName = {
+                    username: 'testuser01',
+                    password: 'testpassword01',
+                    user_type: 'buyer',
+                }
+                return request(app)
+                    .post('/api/users')
+                    .send(buyerWithNoName)
+                    .expect(400, {
+                        error: {
+                            message: 'Name is required for buyer'
+                        }
+                    })
+            })
+        })
 
-            it(`responds with 201, storing bcryped password`, () => {
+        context(`Happy Path for Adding a Buyer`, ()=> {
+
+            it(`responds with 201, storing bcryped password, when adding a buyer`, () => {
                 const newUser = {
                     username: 'testuser01',
                     password: 'testpassword01',
-                    user_type: 'shop',
+                    user_type: 'buyer',
+                    name: 'test buyer',
                 }
 
                 return request(app)
@@ -123,7 +142,6 @@ describe.only('Users Endpoint', () => {
                     .expect(res => {
                         expect(res.body).to.have.property('id');
                         expect(res.body.username).to.equal(newUser.username);
-                        expect(res.body.password).to.equal(newUser.password);
                         expect(res.body.user_type).to.equal(newUser.user_type);
                     })
                     .expect(res => {
@@ -131,15 +149,24 @@ describe.only('Users Endpoint', () => {
                             .where({id: res.body.id})
                             .first()
                             .then((row) => {
-                                console.log(row.password);
                                 expect(row.username).to.eql(newUser.username);
-                                expect(row.password).to.eql(newUser.password);
                                 expect(row.user_type).to.eql(newUser.user_type);
                                 return bcrypt.compare(newUser.password, row.password)
                             })
                             .then(compareMatch => {
                                 expect(compareMatch).to.be.true;
                             })
+                    })
+                    .expect(res => {
+                        if(res.body.user_type === 'buyer'){
+                            expect(res.body.name).to.eql(newUser.name);
+                            db.from('buyer')
+                                .where({name: res.body.name})
+                                .first()
+                                .then((row) => {
+                                    expect(row.name).to.eql(newUser.name);
+                                })
+                        }
                     })
             })
         })
