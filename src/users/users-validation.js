@@ -34,6 +34,7 @@ function validation(req, res, next){
         })
     }
 
+    // Buyer Validation
     if(req.body.user_type === 'buyer'){
          if(!req.body.hasOwnProperty('name')){
              return res.status(400).json({
@@ -42,6 +43,40 @@ function validation(req, res, next){
                  }
              })
          }
+    }
+
+    // Seller Validation
+    if(req.body.user_type === 'shop'){
+        for(const field of ['shop_name', 'address', 'service_type' ]){
+            if(!req.body[field]){
+                return res.status(400)
+                    .json({
+                        error: {
+                            message: `Missing '${field}' in request body`
+                        }
+                    })
+            }
+        }
+
+        const serviceTypesInDB = [
+            'food and drinks',
+            'clothing and accessories',
+            'home and party decor',
+            'educational',
+            'body healing',
+            'tattoo and piercing',
+            'sports and hobbies',
+            'toys and leisure',
+            'bath and body'
+        ]
+
+        if(!serviceTypesInDB.includes(req.body.service_type)){
+            return res.status(400).json({
+                error: {
+                    message: `Serivce type '${req.body.service_type}' does not exist in database`
+                }
+            })
+        }
     }
 
     next();
