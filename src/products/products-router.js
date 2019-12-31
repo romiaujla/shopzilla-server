@@ -66,9 +66,18 @@ ProductRouter.route('/')
     });
   });
 
-ProductRouter.route('/:id').delete((req, res, next) => {
-  const { id } = req.params;
-  res.send(id);
+ProductRouter.route('/:product_id/shop/:shop_id').delete((req, res, next) => {
+  const { shop_id, product_id } = req.params;
+  const db = req.app.get('db');
+  return ProductService.deleteShopProducts(db, shop_id, product_id)
+    .then(() => {
+      return ProductService.deleteProducts(db, product_id)
+        .then(() => {
+          return res.status(204).end();
+        })
+        .catch(next);
+    })
+    .catch(next);
 });
 
 module.exports = ProductRouter;

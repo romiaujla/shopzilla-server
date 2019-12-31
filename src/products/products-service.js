@@ -11,8 +11,16 @@ const ProductService = {
       .returning('*')
       .then(rows => rows[0]);
   },
-  deleteShopProducts(db, id) {
-    // return db('')
+  deleteProducts(db, id) {
+    return db('products')
+      .where({ id })
+      .delete();
+  },
+  deleteShopProducts(db, shop_id, product_id) {
+    return db('shop_products')
+      .where({ shop_id })
+      .andWhere({ product_id })
+      .delete();
   },
   getProducts(db) {
     return db('products');
