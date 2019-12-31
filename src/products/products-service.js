@@ -11,6 +11,9 @@ const ProductService = {
             .returning('*')
             .then((rows) => rows[0]);
     },
+    deleteShopProducts(db, id){
+        // return db('')
+    }
 }
 
 module.exports = ProductService;
