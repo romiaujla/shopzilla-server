@@ -15,6 +15,12 @@ const UserService = {
             .insert(newBuyer)
             .returning("*")
             .then(rows => rows[0]);
+    },
+    insertShop(db, newShop){
+        return db('shop')
+            .insert(newShop)
+            .returning('*')
+            .then(rows => rows[0]);
     }
 }
 
