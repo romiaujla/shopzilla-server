@@ -55,7 +55,15 @@ ProductRouter.route('/')
       .catch(next);
   })
   .get((req, res, next) => {
-    res.send('ok');
+    const db = req.app.get('db');
+    return ProductService.getProducts(db).then(products => {
+      if (!products) {
+        return res.status(400).json({
+          error: { message: 'Could not get products' }
+        });
+      }
+      return res.json(products);
+    });
   });
 
 ProductRouter.route('/:id').delete((req, res, next) => {
