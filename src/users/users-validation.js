@@ -34,6 +34,16 @@ function validation(req, res, next){
         })
     }
 
+    if(req.body.user_type === 'buyer'){
+         if(!req.body.hasOwnProperty('name')){
+             return res.status(400).json({
+                 error: {
+                     message: 'Name is required for buyer'
+                 }
+             })
+         }
+    }
+
     next();
 }
 
