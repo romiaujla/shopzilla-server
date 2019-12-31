@@ -35,36 +35,26 @@ describe(`Product Endpoint`, () => {
 
     describe(`POST /api/products`, () => { 
 
-        beforeEach('insert users', () => {
+        beforeEach('add users', () => {
             return db('users').insert(users);
-        });
+        })
 
-        beforeEach('insert shops', () => {
-            return db('shop').insert(shops);
-        });
+        context(`Happy Path`, () => {
+            it('respoinds 200, and inserts a new product with an id', () => {
+                const newProduct = {
+                    ...products[0],
+                    shop_id: 1,
+                };
 
-        it('should create and return a new product when provided with valid data', () => {
-            
-            const newProduct = {
-                "shop_id": "1",
-                "item" : "Product 1", 
-                "price" : "10.00", 
-                "description": "Test Description for Product 1", 
-                "image_url": "imageproduct1.png",
-            }
-
-            return request(app)
-                .post('/api/products')
-                .send(newProduct)
-                .expect(201)
-                .expect(res => {
-                    expect(res.body).to.be.a('object');
-                    expect(res.body).to.include.keys('id', 'item', 'description', 'image_url');
-                    expect(res.body.item).to.equal(newProduct.item);
-                    expect(res.body.price).to.equal(newProduct.price);
-                    expect(res.body.description).to.equal(newProduct.description);
-                    expect(res.body.image_url).to.equal(newProduct.image_url);
-                })
+                request(app)
+                    .post('/api/products')
+                    .send(newProduct)
+                    .expect(201)
+                    .expect(res => {
+                        expect(res.body).to.be.a('object');
+                        expect(res.body).to.have.property('id');
+                    })
+            })
         })
 
     })
