@@ -43,10 +43,7 @@ describe('Users Endpoint', () => {
 
     describe(`POST /api/users`, ()=>{
         context(`User Validation`, ()=>{
-            // beforeEach('insert users', ()=>{
-            //     return db('users').insert(users);
-            // })
-
+            
             const requiredFields = ['username', 'password', 'user_type']
 
             requiredFields.forEach(field => {
