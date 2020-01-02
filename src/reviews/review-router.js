@@ -1,6 +1,9 @@
 const express = require('express');
 const ReviewRouter = express.Router();
 const ReviewService = require('./review-service');
+const jsonParser = express.json();
+const {jwtAuth} = require('../middleware/jwtAuth');
+const {validation} = require('./review-validation');
 
 ReviewRouter
     .route('/:shop_id')
@@ -21,6 +24,12 @@ ReviewRouter
 
                 return res.json(reviews);
             })
-    })
+    });
+
+ReviewRouter
+    .route('/')
+    .post(jsonParser, validation, (req, res, next) => {
+        res.send('ok');
+    });
 
 module.exports = ReviewRouter;

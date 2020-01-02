@@ -11,6 +11,7 @@ const RegistrationRouter = require('./registration/registration-router');
 const UserRouter = require('./users/users-router');
 const ReviewRouter = require('./reviews/review-router');
 
+// Server configurations
 const app = express();
 const morganOptions = NODE_ENV === 'production' 
     ? 'tiny' 
@@ -19,7 +20,7 @@ app.use(morgan(morganOptions));
 app.use(helmet());
 app.use(cors());
 
-// seller endpoints
+// Routers
 app.use(`/api/auth`, AuthRouter);
 app.use(`/api/shops`, ShopRouter);
 app.use('/api/products', ProductRouter);
@@ -27,7 +28,7 @@ app.use('/api/register', RegistrationRouter);
 app.use('/api/users', UserRouter);
 app.use('/api/reviews', ReviewRouter);
 
-
+// Default test route to show that server has started 
 app.get(`/`, (_,res)=>{
     res.send(`Server listening at PORT:${PORT}`);
 })
