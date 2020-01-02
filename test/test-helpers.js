@@ -52,6 +52,22 @@ function makeShopProductArray(){
     ]
 }
 
+function makeReviewsArray(){
+    return [
+        {"review": "Test Review 01", "rating" : 4.5, "shop_id": 1, "buyer_id": 1},
+        {"review": "Test Review 02", "rating" : 3, "shop_id": 2, "buyer_id": 1},
+        {"review": "Test Review 03", "rating" : 5, "shop_id": 3, "buyer_id": 2},
+        {"review": "Test Review 04", "rating" : 2, "shop_id": 3, "buyer_id": 1},
+    ]
+}
+
+function makeBuyerArray(){
+    return [
+        {"login_id": 4, "name" : "buyer 01"},
+        {"login_id": 5, "name" : "buyer 02"}
+    ]
+}
+
 
 function cleanTables(db){
     return db.raw(`
@@ -71,4 +87,6 @@ module.exports = {
     makeUsersArray,
     makeShopProductArray,
     cleanTables,
+    makeBuyerArray,
+    makeReviewsArray,
 }
