@@ -9,6 +9,7 @@ const AuthRouter = require('./auth/auth-router');
 const ProductRouter = require('./products/products-router');
 const RegistrationRouter = require('./registration/registration-router');
 const UserRouter = require('./users/users-router');
+const ReviewRouter = require('./reviews/review-router');
 
 const app = express();
 const morganOptions = NODE_ENV === 'production' 
@@ -24,6 +25,7 @@ app.use(`/api/shops`, ShopRouter);
 app.use('/api/products', ProductRouter);
 app.use('/api/register', RegistrationRouter);
 app.use('/api/users', UserRouter);
+app.use('/api/reviews', ReviewRouter);
 
 
 app.get(`/`, (_,res)=>{
