@@ -1,6 +1,5 @@
 const knex  = require('knex');
 const app = require('../src/app');
-const {jwtAuth} = require('../src/middleware/jwtAuth');
 const {
     makeUsersArray,
     makeShopsArray,
