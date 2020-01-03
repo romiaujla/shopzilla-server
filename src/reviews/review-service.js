@@ -13,6 +13,9 @@ const ReviewService = {
         return db('reviews')
             .where({id})
             .delete();
+    },
+    getReviews(db){
+        return db('reviews');
     }
 }
 
