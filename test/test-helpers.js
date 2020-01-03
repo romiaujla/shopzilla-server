@@ -68,10 +68,22 @@ function makeBuyerArray(){
     ]
 }
 
+function makeFavouriteProductsArray(){
+    return [
+        {"buyer_id" : 1, "product_id": 1},
+        {"buyer_id" : 1, "product_id": 2},
+        {"buyer_id" : 2, "product_id": 1},
+        {"buyer_id" : 2, "product_id": 2},
+        {"buyer_id" : 2, "product_id": 3},
+        {"buyer_id" : 2, "product_id": 4},
+    ]
+}
+
 
 function cleanTables(db){
     return db.raw(`
     TRUNCATE
+        favourite_products,
         reviews,
         buyer,
         shop_products,
@@ -89,4 +101,5 @@ module.exports = {
     cleanTables,
     makeBuyerArray,
     makeReviewsArray,
+    makeFavouriteProductsArray,
 }
