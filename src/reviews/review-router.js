@@ -62,8 +62,46 @@ ReviewRouter
                 return res.status(201).json(addedReview);
             })
             .catch(next);
+    })
+    .get((req, res, next) => {
+        const db = req.app.get('db');
+        return ReviewService.getReviews(db)
+            .then((reviews) => {
+                if(!reviews){
+                    return res
+                        .status(400)
+                        .json({
+                            error: {
+                                message: `Could not get the reviews from the database`
+                            }
+                        })
+                }
 
-
+                return res.json(reviews);
+            })
+            .catch(next);
     });
+
+ReviewRouter
+    .route('/:id')
+    .delete((req, res, next) => {
+        const db = req.app.get('db');
+        const {id} = req.params;
+        return ReviewService.deleteReview(db, id)
+            .then((response) => {
+                if(!response){
+                    return res
+                        .status(400)
+                        .json({
+                            error: {
+                                message: `Could not complete the deletion of review with id:${id}`
+                            }
+                        })
+                }
+
+                return res.status(204).end();
+            })
+            .catch(next);
+    })
 
 module.exports = ReviewRouter;
