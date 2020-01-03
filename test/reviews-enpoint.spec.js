@@ -1,5 +1,6 @@
 const knex  = require('knex');
 const app = require('../src/app');
+const {jwtAuth} = require('../src/middleware/jwtAuth');
 const {
     makeUsersArray,
     makeShopsArray,
@@ -133,11 +134,11 @@ describe.only(`Reviews Endpoint`, () => {
 
             it(`responds 204, deletes the correct review with the provided id`, () => {
                 const idOfReviewToDelete = 1;
-                return request('app')
-                    .delete('/api/reviews/:id')
+                return request(app)
+                    .delete(`/api/reviews/${idOfReviewToDelete}`)
                     .expect(204)
                     .then(()=>{
-                        return request('app')
+                        return request(app)
                             .get('/api/reviews')
                             .expect(200)
                             .then((res) => {
