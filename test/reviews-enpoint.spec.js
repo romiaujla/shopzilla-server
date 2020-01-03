@@ -106,26 +106,47 @@ describe.only(`Reviews Endpoint`, () => {
         context(`Happy Path`, ()=>{
             
             it('responds 201, and creates a new review with an id', () => {
-                const newReview = {
-                    shop_id: 1,
-                    buyer_id: 1,
-                    rating: 5,
-                    review: 'Test review'
-                }
-    
+                const newReview = reviews[0]
                 return request(app)
                     .post('/api/reviews')
                     .send(newReview)
                     .expect(201)
                     .then((res) => {
-                        expect(res.body).to.be.an('array');
+                        expect(res.body).to.be.a('object');
                         expect(res.body.shop_id).to.eql(newReview.shop_id);
                         expect(res.body.buyer_id).to.eql(newReview.buyer_id);
+                        expect(parseFloat(res.body.rating)).to.equal(parseFloat(newReview.rating));
                         expect(res.body).to.have.property('id');
-                        expect(res.review).to.eql(newReview.review);
+                        expect(res.body.review).to.eql(newReview.review);
                     });
             })
+        })
+    })
 
+    describe(`DELETE /api/reviews/:id`, ()=>{
+        context(`Happy path`, ()=>{
+
+            beforeEach('add reviews', ()=>{
+                return db('reviews')
+                    .insert(reviews);
+            });
+
+            it(`responds 204, deletes the correct review with the provided id`, () => {
+                const idOfReviewToDelete = 1;
+                return request('app')
+                    .delete('/api/reviews/:id')
+                    .expect(204)
+                    .then(()=>{
+                        return request('app')
+                            .get('/api/reviews')
+                            .expect(200)
+                            .then((res) => {
+                                res.body.map((review) => {
+                                    expect(review.id).to.not.eql(idOfReviewToDelete);
+                                })
+                            })
+                    })
+            })
         })
     })
 })
