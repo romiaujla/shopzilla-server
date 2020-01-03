@@ -35,7 +35,7 @@ ReviewRouter
             shop_id, 
             buyer_id, 
             review,
-            rating,
+            rating = 0,
         } = req.body
 
         const newReview = {
@@ -47,7 +47,7 @@ ReviewRouter
 
         const db = req.app.get('db');
 
-        return ReviewService.insertReview(newReview)
+        return ReviewService.insertReview(db, newReview)
             .then((addedReview) => {
                 if(!addedReview){
                     return res
