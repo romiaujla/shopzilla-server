@@ -8,7 +8,12 @@ const ReviewService = {
             .insert(newReview)
             .returning('*')
             .then((rows) => rows[0]);
-    }    
+    },
+    deleteReview(db,id){
+        return db('reviews')
+            .where({id})
+            .delete();
+    }
 }
 
 module.exports = ReviewService;
