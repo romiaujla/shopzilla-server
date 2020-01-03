@@ -1,8 +1,6 @@
 function validation(req, res, next){
     
-    const requireFields = ['review', 'rating']
-    
-    requireFields.forEach(field => {
+    for (const field of ['review', 'rating']){
         if(!req.body[`${field}`]){
             return res
                 .status(400)
@@ -12,7 +10,7 @@ function validation(req, res, next){
                     }
                 })
         }
-    })
+    }
 
     next();
 }
