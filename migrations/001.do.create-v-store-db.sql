@@ -1,5 +1,6 @@
 BEGIN;
 
+DROP TABLE IF EXISTS favourite_products;
 DROP TABLE IF EXISTS reviews;
 DROP TABLE IF EXISTS buyer;
 DROP TABLE IF EXISTS shop_products;
@@ -83,6 +84,12 @@ CREATE TABLE reviews(
     rating NUMERIC(3,2) NOT NUll,
     shop_id INTEGER REFERENCES shop(id) NOT NULL,
     buyer_id INTEGER REFERENCES buyer(id) NOT NULL
+);
+
+CREATE TABLE favourite_products(
+    product_id INTEGER REFERENCES products(id) NOT NULL,
+    buyer_id INTEGER REFERENCES buyer(id) NOT NULL,
+    PRIMARY KEY (product_id, buyer_id)
 );
 
 COMMIT;

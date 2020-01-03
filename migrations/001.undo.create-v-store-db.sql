@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS favourite_products;
 DROP TABLE IF EXISTS reviews;
 DROP TABLE IF EXISTS buyer;
 DROP TABLE IF EXISTS shop_products;
