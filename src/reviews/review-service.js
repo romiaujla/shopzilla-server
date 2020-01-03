@@ -4,10 +4,10 @@ const ReviewService = {
             .where({shop_id});
     },
     insertReview(db, newReview){
-        return db('review')
+        return db('reviews')
             .insert(newReview)
             .returning('*')
-            .then((rows) => row[0]);
+            .then((rows) => rows[0]);
     }    
 }
 
