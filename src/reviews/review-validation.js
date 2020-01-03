@@ -1,14 +1,18 @@
 function validation(req, res, next){
     
-    if(!req.body.review){
-        return res
-            .status(400)
-            .json({
-                error: {
-                    message: `Review is missing`
-                }
-            })
-    }
+    const requireFields = ['review', 'rating']
+    
+    requireFields.forEach(field => {
+        if(!req.body[`${field}`]){
+            return res
+                .status(400)
+                .json({
+                    error: {
+                        message: `'${field}' is required`
+                    }
+                })
+        }
+    })
 
     next();
 }

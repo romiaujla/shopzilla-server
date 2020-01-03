@@ -24,12 +24,46 @@ ReviewRouter
 
                 return res.json(reviews);
             })
+            .catch(next);
     });
 
 ReviewRouter
     .route('/')
     .post(jsonParser, validation, (req, res, next) => {
-        res.send('ok');
+        
+        const {
+            shop_id, 
+            buyer_id, 
+            review,
+            rating,
+        } = req.body
+
+        const newReview = {
+            shop_id,
+            buyer_id,
+            review,
+            rating,
+        }
+
+        const db = req.app.get('db');
+
+        return ReviewService.insertReview(newReview)
+            .then((addedReview) => {
+                if(!addedReview){
+                    return res
+                        .status(400)
+                        .json({
+                            error: {
+                                message: 'Could not add review'
+                            }
+                        })
+                }
+
+                return res.status(201).json(addedReview);
+            })
+            .catch(next);
+
+
     });
 
 module.exports = ReviewRouter;

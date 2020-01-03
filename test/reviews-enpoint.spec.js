@@ -77,20 +77,53 @@ describe.only(`Reviews Endpoint`, () => {
     describe(`POST /api/reviews`, () => {
         context(`Review Validation`, () => {
 
-            it(`responds 400, when review is an empty text`, ()=>{
-                const invalidReview = {
+            const requiredFields = ['review', 'rating'];
+
+            requiredFields.forEach(field => {
+                const newReview = {
                     shop_id: 1,
                     buyer_id: 1,
+                    rating: 5,
+                    review: 'Test review'
                 }
+                
+                it(`responds 400, when '${field}' missing`, ()=>{
+
+                    delete newReview[field]
+                    return request(app)
+                        .post('/api/reviews')
+                        .send(newReview)
+                        .expect(400, {
+                            error: {
+                                message: `'${field}' is required`
+                            }
+                        })
+                })
+
+            })
+        })
+
+        context(`Happy Path`, ()=>{
+            
+            it('responds 201, and creates a new review with an id', () => {
+                const newReview = {
+                    shop_id: 1,
+                    buyer_id: 1,
+                    rating: 5,
+                    review: 'Test review'
+                }
+    
                 return request(app)
                     .post('/api/reviews')
-                    .send(invalidReview)
-                    .expect(400, {
-                        error: {
-                            message: 'Review is missing'
-                        }
-                    })
-
+                    .send(newReview)
+                    .expect(201)
+                    .then((res) => {
+                        expect(res.body).to.be.an('array');
+                        expect(res.body.shop_id).to.eql(newReview.shop_id);
+                        expect(res.body.buyer_id).to.eql(newReview.buyer_id);
+                        expect(res.body).to.have.property('id');
+                        expect(res.review).to.eql(newReview.review);
+                    });
             })
 
         })
