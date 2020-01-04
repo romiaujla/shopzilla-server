@@ -1,7 +1,18 @@
 const ReviewService = {
     getReviewsByShopId(db, shop_id){
-        return db('reviews')
-            .where({shop_id});
+        return db
+            .from('reviews as rv')
+            .select(
+                'rv.review',
+                'by.name',
+                'rv.rating',
+            )
+            .join(
+                'buyer as by',
+                'rv.buyer_id',
+                'by.id'
+            )
+            .where('rv.shop_id', shop_id);
     },
     insertReview(db, newReview){
         return db('reviews')
@@ -16,6 +27,11 @@ const ReviewService = {
     },
     getReviews(db){
         return db('reviews');
+    },
+    getBuyerNameWithId(db, id){
+        return db('buyer')
+            .select('name')
+            .where({id})
     }
 }
 
