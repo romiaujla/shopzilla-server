@@ -7,6 +7,7 @@ const ReviewService = {
                 'by.name',
                 'rv.rating',
                 'rv.buyer_id',
+                'rv.id',
             )
             .join(
                 'buyer as by',
