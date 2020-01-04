@@ -6,6 +6,7 @@ const ReviewService = {
                 'rv.review',
                 'by.name',
                 'rv.rating',
+                'rv.buyer_id',
             )
             .join(
                 'buyer as by',
@@ -32,6 +33,7 @@ const ReviewService = {
         return db('buyer')
             .select('name')
             .where({id})
+            .first();
     }
 }
 
