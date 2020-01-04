@@ -1,5 +1,7 @@
 const knex  = require('knex');
 const app = require('../src/app');
+const ReviewSerivce = require('../src/reviews/review-service');
+
 const {
     makeUsersArray,
     makeShopsArray,
@@ -8,7 +10,7 @@ const {
     cleanTables,
 } = require('./test-helpers');
 
-describe(`Reviews Endpoint`, () => {
+describe.only(`Reviews Endpoint`, () => {
 
     let db;
     let users = makeUsersArray();
@@ -59,7 +61,8 @@ describe(`Reviews Endpoint`, () => {
                     .insert(reviews);
             })
             
-            it(`responds 200, returns correct reviews for shop id provided`, ()=>{
+            it(`responds 200, returns correct reviews for shop id provided, 
+                along with the name of the person who commented`, ()=>{
                 const shop_id = 3;
                 return request(app)
                     .get(`/api/reviews/${shop_id}`)
@@ -67,7 +70,12 @@ describe(`Reviews Endpoint`, () => {
                     .then((res) => {
                         expect(res.body).to.be.an('array');
                         res.body.map((review) => {
-                            expect(review.shop_id).to.eql(shop_id);
+                            expect(review).to.have.property('name');
+                            return ReviewSerivce.getBuyerNameWithId(db, review.buyer_id)
+                                .then((buyer) => {
+                                    expect(buyer).to.be.an('object');
+                                    expect(buyer.name).to.eql(review.name);
+                                })
                         })
                     });
             })
