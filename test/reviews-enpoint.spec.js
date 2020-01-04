@@ -10,7 +10,7 @@ const {
     cleanTables,
 } = require('./test-helpers');
 
-describe.only(`Reviews Endpoint`, () => {
+describe(`Reviews Endpoint`, () => {
 
     let db;
     let users = makeUsersArray();
