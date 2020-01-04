@@ -1,4 +1,5 @@
 TRUNCATE
+    favourite_products,
     reviews,
     buyer,
     shop_products,
