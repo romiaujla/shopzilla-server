@@ -10,7 +10,8 @@ const ProductRouter = require('./products/products-router');
 const RegistrationRouter = require('./registration/registration-router');
 const UserRouter = require('./users/users-router');
 const ReviewRouter = require('./reviews/review-router');
-
+const FavouriteRouter = require('./fav-prod/fav-prod-router');
+const {errorHandler} = require('./errorHandler');
 // Server configurations
 const app = express();
 const morganOptions = NODE_ENV === 'production' 
@@ -27,7 +28,8 @@ app.use('/api/products', ProductRouter);
 app.use('/api/register', RegistrationRouter);
 app.use('/api/users', UserRouter);
 app.use('/api/reviews', ReviewRouter);
-
+app.use('/api/favourites', FavouriteRouter);
+app.use(errorHandler);
 // Default test route to show that server has started 
 app.get(`/`, (_,res)=>{
     res.send(`Server listening at PORT:${PORT}`);
