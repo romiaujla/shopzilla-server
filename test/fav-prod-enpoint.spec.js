@@ -61,6 +61,11 @@ describe.only(`Favourite Products Endpoint`, ()=>{
 
     describe(`GET /api/favourites/:buyer_id`, () => {
 
+        beforeEach(`add favourites`, () => {
+            return db('favourite_products')
+                .insert(favouriteProducts);
+        })
+
         context(`Happy Path`, () => {
             it(`responds 200, get the all the favourites with product info and correct buyer id`, ()=> {
                 const buyer_id = 0;
@@ -69,6 +74,29 @@ describe.only(`Favourite Products Endpoint`, ()=>{
                     .expect(200)
                     .then((res) => {
                         expect(res.body).to.be.an('array');
+                    })
+            });
+        })
+    })
+
+
+    describe(`POST /api/favourites/`, () => {
+        context(`Happy Path`, () => {
+            it(`responds 201, adds the a row with the favourite product id and buyer id`, ()=> {    
+
+                const newFavourite = {
+                    buyer_id: 1,
+                    product_id: 1,
+                }
+
+                return request(app)
+                    .post(`/api/favourites/`)
+                    .send(newFavourite)
+                    .expect(201)
+                    .then((res) => {
+                        expect(res.body).to.be.a('object');
+                        expect(res.body.buyer_id).to.eql(newFavourite.buyer_id);
+                        expect(res.body.product_id).to.eql(newFavourite.product_id);
                     })
             });
         })
