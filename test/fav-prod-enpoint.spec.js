@@ -3,7 +3,6 @@ const app = require('../src/app');
 const {
     makeUsersArray,
     makeFavouriteProductsArray,
-    makeShopProductArray,
     makeBuyerArray,
     makeProductsArray,
     makeShopsArray,
@@ -97,6 +96,39 @@ describe.only(`Favourite Products Endpoint`, ()=>{
                         expect(res.body).to.be.a('object');
                         expect(res.body.buyer_id).to.eql(newFavourite.buyer_id);
                         expect(res.body.product_id).to.eql(newFavourite.product_id);
+                    })
+            });
+        })
+    })
+
+    describe(`DELETE /api/favourites/:buyer_id/:product_id`, () => {
+        context(`Happy Path`, () => {
+
+            beforeEach(`add favourites`, () => {
+                return db('favourite_products')
+                    .insert(favouriteProducts);
+            })
+
+            it(`responds 204, and removes the correct product id from the table`, ()=> {    
+
+                const buyer_id = 1;
+                const product_id = 1;
+                
+                return request(app)
+                    .delete(`/api/favourites/${buyer_id}/${product_id}`)
+                    .expect(204)
+                    .then(() => {
+                        return request(app)
+                            .get(`/api/favourites/${buyer_id}`)
+                            .expect(200)
+                            .then(res => {
+                                res.body.map(fav => {
+                                  if(fav.buyer_id === buyer_id) {
+                                    // check if the deleted item is removed successfully
+                                    expect(fav.product_id).to.not.eql(product_id);
+                                  }
+                                })
+                            })
                     })
             });
         })

@@ -30,6 +30,7 @@ app.use('/api/users', UserRouter);
 app.use('/api/reviews', ReviewRouter);
 app.use('/api/favourites', FavouriteRouter);
 app.use(errorHandler);
+
 // Default test route to show that server has started 
 app.get(`/`, (_,res)=>{
     res.send(`Server listening at PORT:${PORT}`);
