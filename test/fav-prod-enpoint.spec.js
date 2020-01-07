@@ -17,7 +17,6 @@ describe.only(`Favourite Products Endpoint`, ()=>{
     const shops = makeShopsArray();
     const products = makeProductsArray();
     const buyers = makeBuyerArray(); 
-    const shopProducts = makeShopProductArray();
     const favouriteProducts = makeFavouriteProductsArray();
 
     before('make connection', ()=>{
@@ -31,6 +30,26 @@ describe.only(`Favourite Products Endpoint`, ()=>{
         return cleanTables(db);
     })
 
+    beforeEach('add users', ()=>{
+        return db('users')
+            .insert(users);
+    })
+
+    beforeEach('add shops', ()=>{
+        return db('shop')
+            .insert(shops);
+    })
+
+    beforeEach('add buyers', ()=>{
+        return db('buyer')
+            .insert(buyers);
+    })
+
+    beforeEach('add products' , () => {
+        return db('products')
+            .insert(products);
+    })
+
     afterEach('cleanup', () => {
         return cleanTables(db);
     })
@@ -40,10 +59,17 @@ describe.only(`Favourite Products Endpoint`, ()=>{
     })
 
     describe(`GET /api/favourites/:buyer_id`, () => {
+
         context(`Happy Path`, () => {
             it(`responds 200, get the all the favourites with product info and correct buyer id`, ()=> {
-                expect(true).to.be.false;
-            })
+                const buyer_id = 0;
+                return request(app)
+                    .get(`/api/favourites/${buyer_id}`)
+                    .expect(200)
+                    .then((res) => {
+                        expect(res.body).to.be.an('array');
+                    })
+            });
         })
     })
 
