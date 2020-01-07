@@ -72,6 +72,7 @@ FavouriteRouter
                     .status(204)
                     .end();
             })
+            .catch(next);
     })
 
 module.exports = FavouriteRouter;

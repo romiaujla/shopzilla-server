@@ -12,7 +12,8 @@ const UserRouter = require('./users/users-router');
 const ReviewRouter = require('./reviews/review-router');
 const FavouriteRouter = require('./fav-prod/fav-prod-router');
 const {errorHandler} = require('./errorHandler');
-// Server configurations
+
+// Server configurations and middlewares used
 const app = express();
 const morganOptions = NODE_ENV === 'production' 
     ? 'tiny' 
@@ -29,6 +30,8 @@ app.use('/api/register', RegistrationRouter);
 app.use('/api/users', UserRouter);
 app.use('/api/reviews', ReviewRouter);
 app.use('/api/favourites', FavouriteRouter);
+
+// Error handler middleware
 app.use(errorHandler);
 
 // Default test route to show that server has started 
