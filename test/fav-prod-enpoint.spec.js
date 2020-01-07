@@ -24,6 +24,7 @@ describe.only(`Favourite Products Endpoint`, ()=>{
             client: 'pg',
             connection: process.env.TEST_DATABASE_URL,
         })
+        app.set('db', db);
     })
 
     before('cleanup', () => {
