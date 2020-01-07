@@ -1,6 +1,6 @@
 const {NODE_ENV } = require('./config');
 
-function errorhandler(error, req, res, next){
+function errorHandler(error, req, res, next){
     console.log(error);
     let response = {};
     if(NODE_ENV === 'production'){
@@ -16,5 +16,5 @@ function errorhandler(error, req, res, next){
 }
 
 module.exports = {
-    errorhandler,
+    errorHandler,
 };
