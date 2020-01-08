@@ -87,8 +87,8 @@ CREATE TABLE reviews(
 );
 
 CREATE TABLE favourite_products(
-    product_id INTEGER REFERENCES products(id),
-    buyer_id INTEGER REFERENCES buyer(id),
+    product_id INTEGER REFERENCES products(id) ON DELETE CASCADE,
+    buyer_id INTEGER REFERENCES buyer(id) ON DELETE CASCADE,
     PRIMARY KEY (product_id, buyer_id)
 );
 
