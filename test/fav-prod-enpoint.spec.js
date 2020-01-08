@@ -9,7 +9,7 @@ const {
     cleanTables,
 } = require('./test-helpers');
 
-describe.only(`Favourite Products Endpoint`, ()=>{
+describe(`Favourite Products Endpoint`, ()=>{
 
     let db;
     const users = makeUsersArray();
