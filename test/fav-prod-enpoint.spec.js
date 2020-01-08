@@ -73,6 +73,15 @@ describe.only(`Favourite Products Endpoint`, ()=>{
                     .expect(200)
                     .then((res) => {
                         expect(res.body).to.be.an('array');
+                        if(res.body.length){
+                            res.body.map(product => {
+                                expect(product).to.have.property('item');
+                                expect(product).to.have.property('description');
+                                expect(product).to.have.property('price');
+                                expect(product).to.have.property('id');
+                                expect(product).to.have.property('image_url');
+                            })
+                        }
                     })
             });
         })
