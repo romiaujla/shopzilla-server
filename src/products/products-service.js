@@ -24,6 +24,21 @@ const ProductService = {
   },
   getProducts(db) {
     return db('products');
+  },
+  getProductsShop(db){
+    return db('shop_products as sp')
+      .select(
+        'sp.shop_id',
+        'p.id',
+        'p.item',
+        'p.price',
+        'p.description',
+        'p.image_url'
+      ).join(
+        'products as p',
+        'p.id',
+        'sp.product_id'
+      );
   }
 };
 
