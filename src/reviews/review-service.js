@@ -35,6 +35,24 @@ const ReviewService = {
             .select('name')
             .where({id})
             .first();
+    },
+    getReviewById(db, id){
+        return db
+            .from('reviews as rv')
+            .select(
+                'rv.review',
+                'by.name',
+                'rv.rating',
+                'rv.buyer_id',
+                'rv.id',
+            )
+            .join(
+                'buyer as by',
+                'rv.buyer_id',
+                'by.id'
+            )
+            .where('rv.id', id)
+            .first();
     }
 }
 

@@ -82,6 +82,35 @@ describe(`Reviews Endpoint`, () => {
         })
     })
 
+
+    describe.only(`GET /api/reviews/:id`, ()=>{
+        context(`Happy Path`, () => {
+            beforeEach('add reviews', ()=>{
+                return db('reviews')
+                    .insert(reviews);
+            })
+            
+            it(`responds 200, returns correct review with id provided, 
+                along with the name of the person who commented`, ()=>{
+                const id = 2;
+                return request(app)
+                    .get(`/api/reviews/new/${id}`)
+                    .expect(200)
+                    .then((res) => {
+                        expect(res.body).to.be.a('object');
+                        expect(res.body).to.have.property('name');
+                        return ReviewSerivce.getBuyerNameWithId(db, res.body.buyer_id)
+                            .then((buyer) => {
+                                expect(buyer).to.be.an('object');
+                                expect(buyer.name).to.eql(res.body.name);
+                            })
+                        })
+            });
+        })
+    })
+
+
+
     describe(`POST /api/reviews`, () => {
         context(`Review Validation`, () => {
 

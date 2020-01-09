@@ -103,5 +103,27 @@ ReviewRouter
             })
             .catch(next);
     })
+    
+ReviewRouter
+    .route('/new/:id')
+    .get((req, res, next) => {
+        const db = req.app.get('db');
+        const {id} = req.params;
+        return ReviewService.getReviewById(db, id)
+            .then((review) => {
+                if(!review){
+                    return res
+                        .status(400)
+                        .json({
+                            error: {
+                                message: `Could not get the reviews from the database`
+                            }
+                        })
+                }
+                return res.json(review);
+            })
+            .catch(next);
+    })
+    
 
 module.exports = ReviewRouter;
