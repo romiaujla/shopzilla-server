@@ -83,7 +83,7 @@ describe(`Reviews Endpoint`, () => {
     })
 
 
-    describe.only(`GET /api/reviews/:id`, ()=>{
+    describe(`GET /api/reviews/:id`, ()=>{
         context(`Happy Path`, () => {
             beforeEach('add reviews', ()=>{
                 return db('reviews')
