@@ -1,6 +1,21 @@
-# Express Boilerplate!
+# Shopzilla Server
+Shopzilla is an E-commerce application where people can showcase their business for everyone in their world. The user can either create a seller account or a buyer account. If the user is a seller, they can create their own shop page where they can display their products, store hours, location and more! The buyer user can browse the different shops available and save products to their wishlist.
 
-This is a boilerplate project used for starting new projects!
+###### ***Collaborators***
+  [Jordan Duran](https://github.com/jordanduran) <br />
+  [Chau Tran](https://github.com/ChauTran73) <br />
+  [Raman Aujla](https://github.com/romiaujla)
+
+## Links
+
+[Live Link to App](https://shopzilla-client.netlify.com/) <br />  
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c7c7847e-c081-412c-a086-350db179d0e9/deploy-status)](https://shopzilla-client.netlify.com/)
+
+Link to Client Repo
+- [https://github.com/romiaujla/shopzilla-client-v2](https://github.com/romiaujla/shopzilla-client-v2)
+
+Link to API Repo
+- [https://github.com/romiaujla/shopzilla-server](https://github.com/romiaujla/shopzilla-server)
 
 ## Set up
 
@@ -17,21 +32,32 @@ Complete the following steps to clone the server:
 
 
 ## Endpoints
-- GET /api/shops
-    - Returns all the shops in the database
+- GET /api/favourites/:buyer_id
+    - Returns the favourite products selected by the buyer
 
-- GET /api/shops/:id
-    - Returns the shop whose :id number matches in the database
+- POST /api/favourites
+    - Adds a favourite product to the buyers favourite list
 
-- GET /api/shops/:id/products
-    -Returns all the products where :id number is the shops ID number
+- DELETE /api/favourites/:buyer_id/:product_id
+    - Removes the favourite item from the buyers favourite list
 
-- GET /api/shops/search/:name
-    - Returns all the shops which match the shop name with the :name provided by the user
+- GET /api/products
+    - Returns all the prodcuts in the database
 
-- GET /api/shops/service-type/:service_type
-    - Returns all the shops with the provided :service_type, this service_type must match one of the enum types added in the database.
+- GET /api/reviews/:shop_id
+    - Returns all the reviews for the shop with the id provided
 
+- GET /api/reviews/new/:id
+    - Returns a single review with the review id provided, used to return a new review that is created as the response includes the name of the buyer who created the review.
+
+- POST /api/reviews
+    - Creates a new review 
+
+- DELETE /api/reviews/:id
+    - Deletes a review when the review id is provided in the params
+
+- POST /api/users
+    - Creates a new user once valid fields are provided
 
 ## Scripts
 
